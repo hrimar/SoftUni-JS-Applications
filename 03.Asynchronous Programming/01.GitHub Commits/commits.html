@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Github Commits</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+GitHub username:
+<input type="text" id="username" value="nakov" /> <br>
+Repo: <input type="text" id="repo" value="nakov.io.cin" />
+<button onclick="loadCommits()">Load Commits</button>
+<ul id="commits"></ul>
+<script>
+    function loadCommits() {        // 100/100
+        // var.1:
+        $('#commits').empty();
+        // 1. make URL:
+        let url = "https://api.github.com/repos/" + $('#username').val() + "/" + $('#repo').val() + "/commits";
+
+        // 2. ASYNC GET Request with AJAX
+        // $.get(url)   // var.1 .2.1
+        //     .then(displayCommits)
+        //     .catch(displayError);
+
+        $.ajax({   // var.1 .2.2
+            url,
+            success: displayCommits,
+            error: displayError
+        });
+
+        function displayCommits(commits) {
+            for(let commit of commits){
+                $('#commits').append($('<li>').text(commit.commit.author.name + ": " + commit.commit.message));
+            }
+        }
+
+        function displayError(err) {
+            $('#commits').append($('<li>').text("Error: " + err.status + ' (' + err.statusText + ')'));
+        }
+
+        // // var.2:
+        // let repoName = $('#repo').val();
+        // let username = $('#username').val();
+        // let commits = $('#commits');
+        // commits.html('')
+        // let url = `https://api.github.com/repos/${username}/${repoName}/commits`;
+        // $.get(url)
+        //     .then(function(data, status, xhr) {
+        //         data.forEach(function(commit) {
+        //             commits.append(
+        //                 $('<li>')
+        //                     .text(`${commit.commit.author.name}: ${commit.commit.message}`)
+        //             )
+        //         }, this);
+        //     }).fail(function(error) {
+        //     commits.append(
+        //         $('<li>')
+        //             .text(`Error: ${error.status} (${error.statusText})`)
+        //     )
+        // })
+    }
+</script>
+</body>
+</html>
