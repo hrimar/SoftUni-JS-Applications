@@ -1,0 +1,42 @@
+<h2>Create your account:</h2>
+<form id="formRegister" action="#/register" method="POST">
+    <label>Username:</label>
+    <input type="text" name="username" placeholder="Username" >
+    <div id="usernameValidation" class="text-danger"></div>
+    <label>Password:</label>
+    <input type="password" name="pass" placeholder="Password">
+    <div id="passValidation" class="text-danger"></div>
+    <label>Repeat Password:</label>
+    <input type="password" name="checkPass" placeholder="Repeat Password">
+    <input type="submit" class="register" value="Register">
+</form>
+
+<script>
+    $(function () {
+       $('#formRegister').on('submit', function (ev) {
+           let isValid = true;
+           $('#usernameValidation').text('');   // to clear the validation messages!
+           $('#passValidation').text('');   // to clear the validation messages!
+
+           if($('input[name="username"]').val().length < 5){
+               isValid = false;
+               $('#usernameValidation').text('The field is required and have to be at least 5 symbols!')
+           }
+
+           if($('input[name="pass"]').val().length === 0){
+               isValid = false;
+               $('#passValidation').text('The field is required!')
+           }
+
+           if($('input[name="pass"]').val()  !== $('input[name="checkPass"]').val()){
+               isValid = false;
+               $('#passValidation').text('Password does not match!!')
+           }
+
+           if(!isValid){
+               ev.preventDefault();
+               ev.stopPropagation();
+           }
+       })
+    });
+</script>

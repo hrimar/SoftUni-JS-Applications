@@ -1,0 +1,35 @@
+<h2>Login to your account:</h2>
+<form id="formLogin" action="#/login" method="POST">
+    <label>Username:</label>
+    <input type="text" name="username" placeholder="Enter your Email" >
+    <div id="usernameValidation" class="text-danger"></div>
+    <label>Password:</label>
+    <input type="password" name="pass" placeholder="Enter your Password">
+    <div id="passValidation" class="text-danger"></div>
+    <input type="submit" class="login" value="Login">
+</form>
+
+<script>
+    $(function () {
+        $('#formRegister').on('submit', function (ev) {
+            let isValid = true;
+            $('#usernameValidation').text('');   // to clear the validation messages!
+            $('#passValidation').text('');   // to clear the validation messages!
+
+            if($('input[name="username"]').val().length < 5){
+                isValid = false;
+                $('#usernameValidation').text('The field is required and have to be at least 5 symbols!')
+            }
+
+            if($('input[name="pass"]').val().length === 0){
+                isValid = false;
+                $('#passValidation').text('The field is required!')
+            }
+
+            if(!isValid){
+                ev.preventDefault();
+                ev.stopPropagation();
+            }
+        })
+    });
+</script>
